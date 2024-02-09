@@ -10,7 +10,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Project/PHP/PHPProject.php to edi
     </head>
     <body>
         <?php
-        // put your code here
+            include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/frontController.php';
         ?>
     </body>
 </html>
