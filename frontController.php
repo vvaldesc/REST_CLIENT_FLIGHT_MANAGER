@@ -1,25 +1,26 @@
 
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/controllers/usuariosController.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/controllers/reservasController.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/controllers/hotelesController.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/controllers/habitacionesController.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/usuariosController.php';
+//include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/reservasController.php';
+//include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/hotelesController.php';
+//include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/habitacionesController.php';
 /*
 
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/views/usuariosView.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/views/reservasView.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/views/hotelesView.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/views/habitacionesView.php';*/
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/views/usuariosView.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/views/reservasView.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/views/hotelesView.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/views/habitacionesView.php';*/
 
 /*
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/models/UsuariosModel.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/models/ReservasModel.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/models/HotelesModel.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT6_2_Ejercicio_Reserva_Hoteles_MVC/models/HabitacionesModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/models/UsuariosModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/models/ReservasModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/models/HotelesModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/models/HabitacionesModel.php';
 */
+
 // Define la acción por defecto 
-define('ACCION_DEFECTO', 'mostrarFormulario');
+define('ACCION_DEFECTO', 'mostrarDatos');
 // Define el controlador por defecto 
 define('CONTROLADOR_DEFECTO', 'Usuarios');
 
