@@ -7,11 +7,11 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/libr
 class UsuariosController {
 
     // Obtiene una instancia del modelo y de la vista de tareas
-    //private $service;
+    private $service;
     private $view;
 
     public function __construct() {
-        //$this->$service = new Usuario();
+        $this->service = new Usuario();
         $this->view = new UsuariosView();
     }
 
@@ -108,5 +108,4 @@ class UsuariosController {
     public function mostrarDatos() {
         mostrar(request_curl());
     }
-    
 }

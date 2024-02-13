@@ -1,10 +1,10 @@
 
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/usuariosController.php';
+//include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/usuariosController.php';
 //include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/reservasController.php';
-//include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/hotelesController.php';
-//include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/habitacionesController.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/vuelosController.php';
+//include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/pasajesController.php';
 /*
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/views/usuariosView.php';
@@ -20,9 +20,9 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/models
 */
 
 // Define la acción por defecto 
-define('ACCION_DEFECTO', 'mostrarDatos');
+define('ACCION_DEFECTO', 'mostrarVuelos');
 // Define el controlador por defecto 
-define('CONTROLADOR_DEFECTO', 'Usuarios');
+define('CONTROLADOR_DEFECTO', 'vuelos');
 
 // Comprueba la acción a realizar, que llegará en la petición. 
 // Si no hay acción a realizar lanzará la acción por defecto, que es listar
