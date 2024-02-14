@@ -6,23 +6,12 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/libr
 class VuelosView {
 
     public function botonReserva() {
-        return '<button name="reservaHotel_ID" value="" type="submit" class="btn btn-primary btn-lg">Reservar</button>';
+        return '<button name="reservaVuelo" value="" type="submit" class="btn btn-primary btn-lg">Reservar</button>';
     }
-
-    /**
-     * DESC: Entorno formulario se encuentar en este controlador porque va a ser único
-     * dependiendo en qué caso
-     * Podría hacerlo dinámico y que imprima tantos posts como necesite pero de momento
-     * solo imprime un post
-     * este hidden
-     * 
-     * @param streing $innerForm
-     * @return type
-     */
-    public function entornoFormHoteles($innerForm, $hoteles, $miUsuario) {
-        return '<form action ="' . $_SERVER['PHP_SELF'] . '?controller=Habitaciones&action=mostrarHabitacionesLibres" method="POST">' . $innerForm . ''
-                . '<input type="hidden" name="hoteles" value=' . base64_encode(serialize($hoteles)) . '>' //Me va servir para mostrar la información del hotel
-                . '<input type="hidden" name="miUsuario" value="' . ($miUsuario ? base64_encode(serialize($miUsuario)) : '') . '">' // He de pasar el usuario
+    
+    public function formularioReserva($vuelo) {
+        return '<form action ="' . $_SERVER['PHP_SELF'] . '?controller=Pasajes&action=mostrarInterfazReserva" method="POST">' . $this->botonReserva() . ''
+                . '<input type="hidden" name="vuelo" value=' . base64_encode(serialize($vuelo)) . '>' //Instancia vuelo a reservar
                 . '</form>';
     }
 
@@ -31,26 +20,31 @@ class VuelosView {
         foreach ($registro as $key => $value) {
             $html .= entornoTd($value);
         }
+        $html .= entornoTd($this->formularioReserva($registro));
         return $html;
     }
     
-    public function cabecera($param) {
-        //entornoThead($p);
+    public function cabecera() {
+        return '<tr>'
+        . '<th>Identificador</th>'
+        . '<th>Origen</th>'
+        . '<th>Destino</th>'
+        . '<th>Clase</th>'
+        . '<th>Fecha</th>'
+        . '<th>Descuento</th>'
+        . '<th>Reserva</th>'
+        . '</tr>';
     }
 
-    public function imprimirFilasVuelos($vuelos) {
-        $html = '';
-        $html .= $this->cabecera();
-        
-        $html = '<tbody>';
+    public function contenidoTablaVuelos($vuelos) {
+        $htmlBody = '';
         foreach ($vuelos as $vuelo) {
-            $html .= entornoTr($this->imprimirFilaVuelo($vuelo));
+            $htmlBody .= entornoTr($this->imprimirFilaVuelo($vuelo));
         }
-        $html = '</tbody>';
-        return $html;
+        return entornoThead($this->cabecera()).entornoTbody($htmlBody);
     }
 
     public function tablaVuelos($vuelos) {
-        return entornoTabla($this->imprimirFilasVuelos($vuelos), "table");
+        return entornoTabla($this->contenidoTablaVuelos($vuelos), "table");
     }
 }
