@@ -1,24 +1,15 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/UT6_2_Ejercicio_Reserva_Hoteles_MVC/libraries/utilidades/funcionesUtilidades.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/libraries/util_functions.php';
 
-class HotelesView {
-
+class PasajesView {
+    
     public function botonReserva() {
         return '<button name="reservaHotel_ID" value="" type="submit" class="btn btn-primary btn-lg">Reservar</button>';
     }
     
     public function mostrarFormulario() {
-        $html = '<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario para Insertar Pasaje</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+        return '
   <div class="container mt-5">
     <h2>Formulario para Insertar Pasaje</h2>
     <form>
@@ -62,11 +53,6 @@ class HotelesView {
       <button type="submit" class="btn btn-primary">Insertar Pasaje</button>
     </form>
   </div>
-
-  <!-- Bootstrap Bundle JS (popper.js included) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
 ';
         
     }
