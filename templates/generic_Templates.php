@@ -16,6 +16,10 @@ function entornoH3($param) {
     return '<h3>' . $param . '</h3>';
 }
 
+function entornoOption($param) {
+    return '<option>' . $param . '</option>';
+}
+
 function entornoTbody($param) {
     return '<tbody>' . $param . '</tbody>';
 }

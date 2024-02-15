@@ -49,6 +49,10 @@ class vuelosController {
     }
     
     public function mostrarVuelos() {
-        mostrar(menuSuperior().$this->view->tablaVuelos($this->service->request_curl()));
+        mostrar(menuSuperior().$this->view->tablaVuelos(getVuelos()));
+    }
+    
+    public function getVuelos() {
+        return $this->service->request_curl();
     }
 }

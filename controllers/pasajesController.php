@@ -8,18 +8,36 @@ class PasajesController {
 
     // Obtiene una instancia del modelo y de la vista de tareas
     private $view;
+    private $service;
 
     public function __construct() {
         $this->view = new PasajesView();
     }
     
+    public function getInfoVuelos() {
+        return (new vuelosController)->getVuelos();
+    }
+    
+    public function getAllPasajeros() {
+        return (new PasajerosController)->getPasajeros();
+    }
+    
     public function formularioPasaje() {
-        return $this->view->mostrarFormulario();
+        //Para este formulario voy a necesitar toda la información de vuelos desde la base de datos.
+        //Podría guardar la información de la tabla mostrada en una variable superglobal pero
+        //es muy posible que la información de los vuelos cambie en el tiempo
+        $vuelos = $this->getInfoVuelos();
+        $pasajeros = $this->getAllPasajeros();
+        
+        return $this->view->mostrarFormulario($vuelos,$pasajeros);
     }
     
     public function interfazPasajes() {
         mostrar(menuSuperior().$this->formularioPasaje());
     }
+
+    
+    
 
     public function reservaHabitacion($idUsuario, $idhabitacion, $idHotel, $fAlta, $fBaja) {
         return $this->comprobarFechas($fAlta, $fBaja)

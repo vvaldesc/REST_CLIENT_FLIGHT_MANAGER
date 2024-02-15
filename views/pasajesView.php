@@ -8,29 +8,43 @@ class PasajesView {
         return '<button name="reservaHotel_ID" value="" type="submit" class="btn btn-primary btn-lg">Reservar</button>';
     }
     
-    public function mostrarFormulario() {
+    public function optionsVuelos($vuelos) {
+        $html = '';
+            foreach ($vuelos as $vuelo) {
+                $html .= entornoOption($vuelo["identificador"].' - '.$vuelo["aeropuertoorigen"].' - '.$vuelo["aeropuertodestino"]);
+            }
+        return $html;
+    }
+    
+    public function optionsPasajeros($pasajeros) {
+        $html = '';
+            foreach ($pasajeros as $pasajero) {
+                $html .= entornoOption($pasajero["pasajerocod"].' - '.$pasajero["nombre"]);
+            }
+        return $html;
+    }
+    
+    public function mostrarFormulario($vuelos,$pasajeros) {
+        
+        $optionsVuelos = $this->optionsVuelos($vuelos);
+        $optionsPasajeros = $this->optionsPasajeros($pasajeros);
+        
+        
+        
         return '
   <div class="container mt-5">
     <h2>Formulario para Insertar Pasaje</h2>
     <form>
       <div class="mb-3">
-        <label for="selectPasajero" class="form-label">Seleccionar Pasajero</label>
-        <select class="form-select" id="selectPasajero" required>
-          <option value="">Seleccionar...</option>
-          <option value="1">Pasajero 1</option>
-          <option value="2">Pasajero 2</option>
-          <option value="3">Pasajero 3</option>
-          <!-- Agrega más opciones según sea necesario -->
+        <label for="selectVuelo" class="form-label">Seleccionar Identificador de Vuelo</label>
+        <select class="form-select" id="selectVuelo" required>
+          '.$optionsVuelos.'
         </select>
       </div>
       <div class="mb-3">
-        <label for="selectVuelo" class="form-label">Seleccionar Identificador de Vuelo</label>
-        <select class="form-select" id="selectVuelo" required>
-          <option value="">Seleccionar...</option>
-          <option value="Vuelo1">Vuelo 1</option>
-          <option value="Vuelo2">Vuelo 2</option>
-          <option value="Vuelo3">Vuelo 3</option>
-          <!-- Agrega más opciones según sea necesario -->
+        <label for="selectPasajero" class="form-label">Seleccionar Pasajero</label>
+        <select class="form-select" id="selectPasajero" required>
+          '.$optionsPasajeros.'
         </select>
       </div>
       <div class="mb-3">
