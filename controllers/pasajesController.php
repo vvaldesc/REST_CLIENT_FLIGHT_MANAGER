@@ -1,8 +1,8 @@
 <?php
 
-//include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/views/pasajesView.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/views/pasajesView.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/services/pasajeService.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/libraries/utilidades.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/libraries/util_functions.php';
 
 class PasajesController {
 
@@ -10,11 +10,15 @@ class PasajesController {
     private $view;
 
     public function __construct() {
-        //$this->$view = new Reserva();
+        $this->view = new PasajesView();
     }
     
-    public function mostrarFormularioPasaje($param) {
-        mostrar($this->view->mostrarFormulario());
+    public function formularioPasaje() {
+        return $this->view->mostrarFormulario();
+    }
+    
+    public function interfazPasajes() {
+        mostrar(menuSuperior().$this->formularioPasaje());
     }
 
     public function reservaHabitacion($idUsuario, $idhabitacion, $idHotel, $fAlta, $fBaja) {
