@@ -25,7 +25,7 @@ class PasajesView {
     public function listarPasajes($pasajes) {
         $htmlBody = '';
         foreach ($pasajes as $pasaje) {
-            $htmlBody .= entornoTr($this->imprimirFilaVuelo($pasaje));
+            $htmlBody .= entornoTr($this->imprimirFilaPasaje($pasaje));
         }
         return entornoThead($this->cabecera()).entornoTbody($htmlBody);
     }

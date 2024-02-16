@@ -60,7 +60,7 @@ class vuelosController {
                 mostrar(menuSuperior().$this->infoVuelo($_POST["identificadorVuelo"]));
             } else if (isset($_POST["2"])) {
                 $pasajes = (new PasajesController)->getPasajesVuelo($_POST["identificadorVuelo"]);
-                if (!is_array($pasajes) || $pasajes=="SIN DATOS")
+                if (!is_array($pasajes) || $pasajes==="SIN DATOS")
                     throw new Exception(pantallaMensajeError("No existen pasajes en el vuelo seleccionado"));
                 mostrar(menuSuperior().(new PasajesController)->tablaPasajes($pasajes));
             } else {
