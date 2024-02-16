@@ -5,11 +5,11 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/libr
 
 class VuelosView {
 
-    public function botonReserva() {
-        return '<button name="reservaVuelo" value="" type="submit" class="btn btn-primary btn-lg">Reservar</button>';
+    public function botonDetalles() {
+        return '<button name="detallesVuelo" value="" type="submit" class="btn btn-secondary btn-lg">Detalles</button>';
     }
     
-    public function formularioReserva($vuelo) {
+    public function formularioDetalleVuelo($vuelo) {
         return '<form action ="' . $_SERVER['PHP_SELF'] . '?controller=Pasajes&action=mostrarInterfazReserva" method="POST">' . $this->botonReserva() . ''
                 . '<input type="hidden" name="vuelo" value=' . base64_encode(serialize($vuelo)) . '>' //Instancia vuelo a reservar
                 . '</form>';
@@ -20,7 +20,7 @@ class VuelosView {
         foreach ($registro as $key => $value) {
             $html .= entornoTd($value);
         }
-        $html .= entornoTd($this->formularioReserva($registro));
+        //$html .= entornoTd($this->formularioDetalleVuelo($registro));
         return $html;
     }
     
@@ -32,10 +32,16 @@ class VuelosView {
         . '<th>Clase</th>'
         . '<th>Fecha</th>'
         . '<th>Descuento</th>'
-        . '<th>Reserva</th>'
         . '</tr>';
     }
 
+    
+    public function contenidoTablaVuelo($vuelo) {
+        $htmlBody = entornoTr($this->imprimirFilaVuelo($vuelo));
+        return entornoThead($this->cabecera()).entornoTbody($htmlBody);
+    }
+    
+    
     public function contenidoTablaVuelos($vuelos) {
         $htmlBody = '';
         foreach ($vuelos as $vuelo) {
@@ -43,8 +49,38 @@ class VuelosView {
         }
         return entornoThead($this->cabecera()).entornoTbody($htmlBody);
     }
+    
+    public function tablaVuelo($vuelo) {
+        return entornoTabla($this->contenidoTablaVuelo($vuelo), "table");
+    }
 
     public function tablaVuelos($vuelos) {
         return entornoTabla($this->contenidoTablaVuelos($vuelos), "table");
+    }
+    
+    public function optionsVuelos($vuelos) {
+        $html = '';
+            foreach ($vuelos as $vuelo) {
+                $html .= entornoOption($vuelo["identificador"].' - '.$vuelo["aeropuertoorigen"].' - '.$vuelo["aeropuertodestino"],$vuelo["identificador"]);
+            }
+        return $html;
+    }
+    
+    public function formularioVuelo($vuelos) {
+        $optionsVuelos = $this->optionsVuelos($vuelos);
+        
+        return '  <div class="container mt-5">
+                    <h2>Selección de vuelo</h2>
+                    <form action="index.php?controller=vuelos&action=manejarAccion" method="POST">
+                      <div class="mb-3">
+                        <label for="selectVuelo" class="form-label">Seleccionar Identificador de Vuelo</label>
+                        <select name="identificadorVuelo" class="form-select" id="selectVuelo" required>
+                          '.$optionsVuelos.'
+                        </select>
+                      </div>
+                      <button name="1" type="submit" class="btn btn-primary">Ver información</button>
+                      <button name="2" type="submit" class="btn btn-primary">Lista de pasajes</button>
+                    </form>
+                  </div>';
     }
 }

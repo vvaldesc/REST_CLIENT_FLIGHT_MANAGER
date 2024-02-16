@@ -8,29 +8,65 @@ class PasajesView {
         return '<button name="reservaHotel_ID" value="" type="submit" class="btn btn-primary btn-lg">Reservar</button>';
     }
     
-    public function optionsVuelos($vuelos) {
-        $html = '';
-            foreach ($vuelos as $vuelo) {
-                $html .= entornoOption($vuelo["identificador"].' - '.$vuelo["aeropuertoorigen"].' - '.$vuelo["aeropuertodestino"]);
-            }
-        return $html;
-    }
-    
     public function optionsPasajeros($pasajeros) {
         $html = '';
             foreach ($pasajeros as $pasajero) {
-                $html .= entornoOption($pasajero["pasajerocod"].' - '.$pasajero["nombre"]);
+                $html .= entornoOption($pasajero["pasajerocod"].' - '.$pasajero["nombre"],$pasajero["pasajerocod"]);
             }
         return $html;
     }
     
+    //--------FUNCIONES TABLAS-------//
+    public function tablaPasajes($pasajes) {
+        //pasajes puede ser una array de pasajes o el registro de un pasaje
+        return entornoTabla($this->contenidoTablaPasajes($pasajes), "table");
+    }
+    
+    public function listarPasajes($pasajes) {
+        $htmlBody = '';
+        foreach ($pasajes as $pasaje) {
+            $htmlBody .= entornoTr($this->imprimirFilaVuelo($pasaje));
+        }
+        return entornoThead($this->cabecera()).entornoTbody($htmlBody);
+    }
+    
+    public function imprimirFilaPasaje($registro) {
+        $html = '';
+        foreach ($registro as $key => $value) {
+            $html .= entornoTd($value);
+        }
+        //$html .= entornoTd($this->formularioDetalleVuelo($registro));
+        return $html;
+    }
+    
+    public function cabecera() {
+        return '<tr>'
+        . '<th>idpasaje</th>'
+        . '<th>pasajerocod</th>'
+        . '<th>identificador</th>'
+        . '<th>numasiento</th>'
+        . '<th>clase</th>'
+        . '<th>pvp</th>'
+        . '</tr>';
+    }
+    
+    public function listarPasaje($pasaje) {
+        $htmlBody = entornoTr($this->imprimirFilaPasaje($pasaje));
+        return entornoThead($this->cabecera()).entornoTbody($htmlBody);
+    }
+    
+    public function contenidoTablaPasajes($pasajes) {
+        if (is_array($pasajes[array_key_first($pasajes)])){
+            return $this->listarPasajes($pasajes);
+        } else {
+            return $this->listarPasaje($pasajes);
+        }
+    }
+    //--------FUNCIONES TABLAS-------//
+    
     public function mostrarFormulario($vuelos,$pasajeros) {
-        
-        $optionsVuelos = $this->optionsVuelos($vuelos);
-        $optionsPasajeros = $this->optionsPasajeros($pasajeros);
-        
-        
-        
+        $optionsVuelos = (new vuelosController())->optionsVuelos($vuelos);
+        $optionsPasajeros = $this->optionsPasajeros($pasajeros);        
         return '
   <div class="container mt-5">
     <h2>Formulario para Insertar Pasaje</h2>

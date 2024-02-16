@@ -20,22 +20,21 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/models
 */
 
 // Define la acción por defecto 
-define('ACCION_DEFECTO', 'interfazPasajes');
+define('ACCION_DEFECTO', 'mostrarVuelos');
 // Define el controlador por defecto 
-define('CONTROLADOR_DEFECTO', 'pasajes');
+define('CONTROLADOR_DEFECTO', 'vuelos');
 
 // Comprueba la acción a realizar, que llegará en la petición. 
 // Si no hay acción a realizar lanzará la acción por defecto, que es listar
 // Y se carga la acción, llama a la función cargarAccion 
 function lanzarAccion($controllerObj) {
-
     if (isset($_GET["action"]) && method_exists($controllerObj,
                     $_GET["action"])) {
         cargarAccion($controllerObj, $_GET["action"]);
     } else {
         cargarAccion($controllerObj, ACCION_DEFECTO);
         //O añadir una página indicando el error de la acción 
-        //die("Se ha cargado una acción errónea"); 
+        //die("Se ha cargado una acción errónea");
     }
 }
 
