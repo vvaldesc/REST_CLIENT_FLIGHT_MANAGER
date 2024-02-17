@@ -2,7 +2,6 @@
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/views/pasajesView.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/services/pasajeService.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/libraries/util_functions.php';
 
 class PasajesController {
 
@@ -16,7 +15,7 @@ class PasajesController {
     }
     
     public function getPasajesVuelo($identificadorVuelo) {
-        return $this->service->request_pasaje_vuelo($identificadorVuelo);
+        return parseAssocToPasaje($this->service->request_pasaje_vuelo($identificadorVuelo));
     }
     
     public function getInfoVuelos() {
@@ -33,7 +32,6 @@ class PasajesController {
         //es muy posible que la información de los vuelos cambie en el tiempo
         $vuelos = $this->getInfoVuelos();
         $pasajeros = $this->getAllPasajeros();
-        
         return $this->view->mostrarFormulario($vuelos,$pasajeros);
     }
     

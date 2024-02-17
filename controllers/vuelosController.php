@@ -2,8 +2,7 @@
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/views/vuelosView.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/services/VueloService.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/libraries/util_functions.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/templates/generic_templates.php';
+
 
 
 class vuelosController {
@@ -34,7 +33,7 @@ class vuelosController {
     }
     
     public function getVuelos() {
-        return $this->service->request_curl();
+        return parseAssocToVuelo($this->service->request_curl());
     }
     
     public function formularioVuelo() {
