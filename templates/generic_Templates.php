@@ -1,5 +1,7 @@
 <?php
 
+
+
 function entornoTd($param) {
     return '<td>' . $param . '</td>';
 }
@@ -35,14 +37,6 @@ function entornoImg($src) {
 
 function entornoTabla($param, $class = null) {
     return '<table class=' . $class . '>' . $param . '</table>';
-}
-
-function mensajeError($message) {
-    return '<div class="alert alert-danger text-center" role="alert"><p>' . $message . '</p></div>';
-}
-
-function pantallaMensajeError($message) {
-    return menuSuperior().'<div class="alert alert-danger text-center" role="alert"><p>' . $message . '</p></div>';
 }
 
 function mostrar($param) {

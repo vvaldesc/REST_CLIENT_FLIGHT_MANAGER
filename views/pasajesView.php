@@ -17,6 +17,14 @@ class PasajesView {
     }
     
     //--------FUNCIONES TABLAS-------//
+    public function contenidoTablaPasajes($pasajes) {
+        if (is_array($pasajes[array_key_first($pasajes)])){
+            return $this->listarPasajes($pasajes);
+        } else {
+            return $this->listarPasaje($pasajes);
+        }
+    }
+    
     public function tablaPasajes($pasajes) {
         //pasajes puede ser una array de pasajes o el registro de un pasaje
         return entornoTabla($this->contenidoTablaPasajes($pasajes), "table");
@@ -25,7 +33,7 @@ class PasajesView {
     public function listarPasajes($pasajes) {
         $htmlBody = '';
         foreach ($pasajes as $pasaje) {
-            $htmlBody .= entornoTr($this->imprimirFilaPasaje($pasaje));
+            $htmlBody .= entornoTr($this->imprimirFilaPasaje($pasaje->toArray()));
         }
         return entornoThead($this->cabecera()).entornoTbody($htmlBody);
     }
@@ -53,14 +61,6 @@ class PasajesView {
     public function listarPasaje($pasaje) {
         $htmlBody = entornoTr($this->imprimirFilaPasaje($pasaje));
         return entornoThead($this->cabecera()).entornoTbody($htmlBody);
-    }
-    
-    public function contenidoTablaPasajes($pasajes) {
-        if (is_array($pasajes[array_key_first($pasajes)])){
-            return $this->listarPasajes($pasajes);
-        } else {
-            return $this->listarPasaje($pasajes);
-        }
     }
     //--------FUNCIONES TABLAS-------//
     

@@ -17,6 +17,7 @@ class VuelosView {
 
     public function imprimirFilaVuelo($registro) {
         $html = '';
+        $registro;
         foreach ($registro as $key => $value) {
             $html .= entornoTd($value);
         }
@@ -45,7 +46,7 @@ class VuelosView {
     public function contenidoTablaVuelos($vuelos) {
         $htmlBody = '';
         foreach ($vuelos as $vuelo) {
-            $htmlBody .= entornoTr($this->imprimirFilaVuelo($vuelo));
+            $htmlBody .= entornoTr($this->imprimirFilaVuelo($vuelo->toArray()));
         }
         return entornoThead($this->cabecera()).entornoTbody($htmlBody);
     }
@@ -61,7 +62,7 @@ class VuelosView {
     public function optionsVuelos($vuelos) {
         $html = '';
             foreach ($vuelos as $vuelo) {
-                $html .= entornoOption($vuelo["identificador"].' - '.$vuelo["aeropuertoorigen"].' - '.$vuelo["aeropuertodestino"],$vuelo["identificador"]);
+                $html .= entornoOption($vuelo->getIdentificador().' - '.$vuelo->getAeropuertoOrigen().' - '.$vuelo->getAeropuertoDestino(),$vuelo->getIdentificador());
             }
         return $html;
     }

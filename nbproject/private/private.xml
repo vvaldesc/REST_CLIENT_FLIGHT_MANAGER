@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/UT7_3_Actividad3_RESTFul_Cliente/services/PasajeService.php</file>
             <file>file:/C:/xampp/htdocs/UT7_3_Actividad3_RESTFul_Cliente/controllers/pasajesController.php</file>
-            <file>file:/C:/xampp/htdocs/UT7_3_Actividad3_RESTFul_Cliente/templates/generic_Templates.php</file>
-            <file>file:/C:/xampp/htdocs/UT7_3_Actividad3_RESTFul_Cliente/views/vuelosView.php</file>
-            <file>file:/C:/xampp/htdocs/UT7_3_Actividad3_RESTFul_Cliente/views/pasajesView.php</file>
+            <file>file:/C:/xampp/htdocs/UT7_3_Actividad3_RESTFul_Cliente/index.php</file>
+            <file>file:/C:/xampp/htdocs/UT7_3_Actividad3_RESTFul_Cliente/controllers/vuelosController.php</file>
+            <file>file:/C:/xampp/htdocs/UT7_3_Actividad3_RESTFul_Cliente/services/classes/objectParser.php</file>
+            <file>file:/C:/xampp/htdocs/UT7_3_Actividad3_RESTFul_Cliente/controllers/pasajerosController.php</file>
         </group>
     </open-files>
 </project-private>
