@@ -85,9 +85,9 @@ class PasajeService {
         curl_close($conexion);
     }
 
-//PUT para modificar 
-    function request_put($dep, $nom, $loc) {
-        $envio = json_encode(array("dept_no" => $dep, "dnombre" => $nom, "loc" => $loc));
+    //PUT para modificar 
+    function request_put($idpasaje, $pasajerocod, $identificador, $numasiento, $clase, $pvp) {
+        $envio = json_encode(array("idpasaje" => $idpasaje, "pasajerocod" => $pasajerocod, "identificador" => $identificador, "numasiento" => $loc, "clase" => $clase, "clase" => $pvp));
         $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeServices.php/";
         $conexion = curl_init();
         curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);

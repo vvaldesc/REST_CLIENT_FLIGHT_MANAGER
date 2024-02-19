@@ -10,7 +10,7 @@ class VuelosView {
     }
     
     public function formularioDetalleVuelo($vuelo) {
-        return '<form action ="' . $_SERVER['PHP_SELF'] . '?controller=Pasajes&action=mostrarInterfazReserva" method="POST">' . $this->botonReserva() . ''
+        return '<form action ="index.php?controller=Pasajes&action=mostrarInterfazReserva" method="POST">' . $this->botonReserva() . ''
                 . '<input type="hidden" name="vuelo" value=' . base64_encode(serialize($vuelo)) . '>' //Instancia vuelo a reservar
                 . '</form>';
     }

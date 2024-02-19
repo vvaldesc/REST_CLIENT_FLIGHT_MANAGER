@@ -36,7 +36,7 @@ class vuelosController {
         return parseAssocToVuelo($this->service->request_curl());
     }
     
-    public function formularioVuelo() {
+    public function mostrarFormularioVuelo() {
         mostrar(menuSuperior().$this->view->formularioVuelo($this->getVuelos()));
     }
     

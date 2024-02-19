@@ -15,15 +15,19 @@ class PasajesController {
     }
     
     public function getPasajesVuelo($identificadorVuelo) {
-        return parseAssocToPasaje($this->service->request_pasaje_vuelo($identificadorVuelo));
+        return parseAssocToVuelo($this->service->request_pasaje_vuelo($identificadorVuelo));
     }
     
     public function getInfoVuelos() {
-        return (new vuelosController)->getVuelos();
+        return parseAssocToVuelo((new vuelosController)->getVuelos());
     }
     
     public function getAllPasajeros() {
-        return (new PasajerosController)->getPasajeros();
+        return parseAssocToPasajero((new PasajerosController)->getPasajeros());
+    }
+    
+    public function getAllPasajes() {
+        return parseAssocToPasaje($this->service->request_curl());
     }
     
     public function formularioPasaje() {
@@ -35,8 +39,46 @@ class PasajesController {
         return $this->view->mostrarFormulario($vuelos,$pasajeros);
     }
     
-    public function interfazPasajes() {
-        mostrar(menuSuperior().$this->formularioPasaje());
+    public function mostrarInsertarPasajes() {
+        try {
+            mostrar(menuSuperior().$this->formularioPasaje());
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+    
+    public function editarPasaje() {
+        try {
+            if (!isset($_POST["cancelarCambiosPasaje"])) {
+                $this->service->request_put($_POST["idpasaje"], $_POST["pasajerocod"], $_POST["identificador"], $_POST["numasiento"], $_POST["clase"], $_POST["pvp"]);
+            } else {
+                header("Location:index.php?controller=Pasajes&action=mostrarGestionarPasajes");
+                quit();
+            }
+
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+    
+    public function tablaGestionable() {
+        $allPasajes = isset($_POST["editarPasaje"])
+                ? unserialize(base64_decode($_POST["pasajes"]))
+                : $this->getAllPasajes();
+        return $this->view->tablaGestionarPasajes($allPasajes);
+    }
+    
+    public function eliminarRegistro() {
+        $this->service->request_delete($_POST["borrarPasaje"]);
+    }
+    
+    public function mostrarGestionarPasajes() {
+        try {
+            //if (isset($_POST["cancelarCambiosPasaje"])) $_POST = array();
+            mostrar(menuSuperior().$this->tablaGestionable());
+        } catch (Exception $exc) {
+            echo $exc->getMessage();
+        }
     }
 
     public function optionsPasajeros($pasajeros) {

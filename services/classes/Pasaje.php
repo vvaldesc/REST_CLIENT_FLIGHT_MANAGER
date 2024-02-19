@@ -32,4 +32,64 @@ class Pasaje {
     public function toArray() {
         return get_object_vars($this);
     }
+    
+    // Getter para $idpasaje
+    public function getIdPasaje() {
+        return $this->idpasaje;
+    }
+
+    // Setter para $idpasaje
+    public function setIdPasaje($idpasaje) {
+        $this->idpasaje = $idpasaje;
+    }
+
+    // Getter para $pasajerocod
+    public function getPasajeroCod() {
+        return $this->pasajerocod;
+    }
+
+    // Setter para $pasajerocod
+    public function setPasajeroCod($pasajerocod) {
+        $this->pasajerocod = $pasajerocod;
+    }
+
+    // Getter para $identificador
+    public function getIdentificador() {
+        return $this->identificador;
+    }
+
+    // Setter para $identificador
+    public function setIdentificador($identificador) {
+        $this->identificador = $identificador;
+    }
+
+    // Getter para $numasiento
+    public function getNumAsiento() {
+        return $this->numasiento;
+    }
+
+    // Setter para $numasiento
+    public function setNumAsiento($numasiento) {
+        $this->numasiento = $numasiento;
+    }
+
+    // Getter para $clase
+    public function getClase() {
+        return $this->clase;
+    }
+
+    // Setter para $clase
+    public function setClase($clase) {
+        $this->clase = $clase;
+    }
+
+    // Getter para $pvp
+    public function getPVP() {
+        return $this->pvp;
+    }
+
+    // Setter para $pvp
+    public function setPVP($pvp) {
+        $this->pvp = $pvp;
+    }    
 }
