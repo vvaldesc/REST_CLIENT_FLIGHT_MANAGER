@@ -21,7 +21,14 @@ class PasajesView {
     }
     
     public function botonConfirmarCambiosModal() {
-        return '<button name="confirmarCambiosPasaje" value="" type="submit" class="btn btn-primary btn-lg">Confirmar</button>';
+        return '        <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              Launch demo modal
+                            </button>';
+    }
+    
+    public function inputHiddenPasaje() {
+        if (isset($_POST["editarPasaje"])) return '<input type="hidden" name="idpasaje" value='.$_POST["editarPasaje"].'>';
     }
     
     public function botonCancelar() {
@@ -40,25 +47,50 @@ class PasajesView {
     }
     
     public function modalConfirmarCambios() {
-        return '<div class="modal fade" id="modalConfirmarCambios" tabindex="-1" role="dialog" aria-labelledby="modalConfirmarCambios" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          ...
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          '.$this->botonConfirmarCambiosModal().'
+        return '<!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            ...
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
                         </div>
                       </div>
+                    </div>';
+    }
+    
+    public function imprimirBotonModalConfirmar() {
+        return '<!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmarModal">
+                  Confirmar
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmarModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        ...
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                      </div>
                     </div>
-                  </div>';
+                  </div>
+                </div>';
     }
 
     public function modalBorrarPasaje() {
@@ -84,7 +116,7 @@ class PasajesView {
     }
     
     public function entornoFormTablaEditable($innerForm) {
-        return '<form action ="index.php?controller=Pasajes&action=editarPasaje" method="POST">' . $innerForm . '</form>';
+        return '<form action="index.php?controller=Pasajes&action=editarPasaje" method="POST">' . $innerForm . $this->inputHiddenPasaje() . '</form>';
     }
     
     public function entornoInput($type, $name, $value) {
@@ -94,7 +126,7 @@ class PasajesView {
     public function optionsPasajeros($pasajeros) {
         $html = '';
             foreach ($pasajeros as $pasajero) {
-                $html .= entornoOption($pasajero["pasajerocod"].' - '.$pasajero["nombre"],$pasajero["pasajerocod"]);
+                $html .= entornoOption($pasajero->getPasajeroCod().' - '.$pasajero->getNombre(),$pasajero->getPasajeroCod());
             }
         return $html;
     }
@@ -195,7 +227,7 @@ class PasajesView {
                     ? entornoTd($this->entornoInput('text',$key,$value))
                     : entornoTd($value);
         }
-        $html .= entornoTd($this->botonConfirmarCambios());
+        $html .= entornoTd($this->imprimirBotonModalConfirmar());
         $html .= entornoTd($this->formularioCancelarCambios());
         return $html;
     }
@@ -239,45 +271,45 @@ class PasajesView {
     
     //-------------------------------------//
 
-    public function mostrarFormulario($vuelos,$pasajeros) {
+    public function mostrarFormularioInsertar($vuelos,$pasajeros) {
         $optionsVuelos = (new vuelosController())->optionsVuelos($vuelos);
         $optionsPasajeros = $this->optionsPasajeros($pasajeros);        
-        return '
-  <div class="container mt-5">
-    <h2>Formulario para Insertar Pasaje</h2>
-    <form>
-      <div class="mb-3">
-        <label for="selectVuelo" class="form-label">Seleccionar Identificador de Vuelo</label>
-        <select class="form-select" id="selectVuelo" required>
-          '.$optionsVuelos.'
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="selectPasajero" class="form-label">Seleccionar Pasajero</label>
-        <select class="form-select" id="selectPasajero" required>
-          '.$optionsPasajeros.'
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="inputAsiento" class="form-label">Número de Asiento</label>
-        <input type="text" class="form-control" id="inputAsiento" required>
-      </div>
-      <div class="mb-3">
-        <label for="selectClase" class="form-label">Seleccionar Clase</label>
-        <select class="form-select" id="selectClase" required>
-          <option value="">Seleccionar...</option>
-          <option value="Turista">Turista</option>
-          <option value="Primera">Primera</option>
-          <option value="Business">Business</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="inputPrecio" class="form-label">Precio</label>
-        <input type="number" class="form-control" id="inputPrecio" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Insertar Pasaje</button>
-    </form>
-  </div>
+        return '<div class="container mt-5">
+                  <h2>Formulario para Insertar Pasaje</h2>
+                  <form action="index.php?controller=pasajes&action=insertarPasaje" method="POST">
+                    <div class="mb-3">
+                      <label for="selectVuelo" class="form-label">Seleccionar Identificador de Vuelo</label>
+                      <select name="vuelo" class="form-select" id="selectVuelo" required>
+                        '.$optionsVuelos.'
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <labelfor="selectPasajero" class="form-label">Seleccionar Pasajero</label>
+                      <select name="pasajerocod" class="form-select" id="selectPasajero" required>
+                        '.$optionsPasajeros.'
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="inputAsiento" class="form-label">Número de Asiento</label>
+                      <input name="numasiento" type="text" class="form-control" id="inputAsiento" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="radioTurista" class="form-label">Turista</label>
+                      <input type="radio" id="radioTurista" name="clase" value="Turista" required>
+
+                      <label for="radioPrimera" class="form-label">Primera</label>
+                      <input type="radio" id="radioPrimera" name="clase" value="Primera" required>
+
+                      <label for="radioBusiness" class="form-label">Business</label>
+                      <input type="radio" id="radioBusiness" name="clase" value="Business" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="inputPrecio" class="form-label">Precio</label>
+                      <input name="pvp" type="number" class="form-control" id="inputPrecio" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Insertar Pasaje</button>
+                  </form>
+                </div>
 ';
         
     }

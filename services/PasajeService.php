@@ -63,8 +63,8 @@ class PasajeService {
     }
 
     //POST Van datos, se pone el Content-Length del envío 
-    function request_post($dep, $nom, $loc) {
-        $envio = json_encode(array("dept_no" => $dep, "dnombre" => $nom, "loc" => $loc));
+    function request_post($pasajerocod, $vuelo, $numasiento, $clase, $pvp) {
+        $envio = json_encode(array("pasajerocod" => $pasajerocod, "identificador" => $vuelo, "numasiento" => $numasiento, "clase" => $clase, "pvp" => $pvp));
         $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeServices.php/";
         $conexion = curl_init();
         curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);
@@ -79,15 +79,14 @@ class PasajeService {
         curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
         $res = curl_exec($conexion);
         if ($res) {
-            echo "<br>Salida request_post<br>";
-            print_r($res);
+            return $res;
         }
         curl_close($conexion);
     }
 
     //PUT para modificar 
     function request_put($idpasaje, $pasajerocod, $identificador, $numasiento, $clase, $pvp) {
-        $envio = json_encode(array("idpasaje" => $idpasaje, "pasajerocod" => $pasajerocod, "identificador" => $identificador, "numasiento" => $loc, "clase" => $clase, "clase" => $pvp));
+        $envio = json_encode(array("idpasaje" => $idpasaje, "pasajerocod" => $pasajerocod, "identificador" => $identificador, "numasiento" => $numasiento, "clase" => $clase, "pvp" => $pvp));
         $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeServices.php/";
         $conexion = curl_init();
         curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);
@@ -104,6 +103,7 @@ class PasajeService {
         if ($res) {
             echo "<br>Salida request_put<br>";
             print_r($res);
+            return $res;
         }
         curl_close($conexion);
     }

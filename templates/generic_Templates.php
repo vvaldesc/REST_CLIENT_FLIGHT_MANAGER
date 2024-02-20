@@ -44,21 +44,21 @@ function mostrar($param) {
 }
 
 function menuSuperior() {
-    return '<nav class="navbar navbar-expand-lg navbar-light">
+    return '<nav class="navbar navbar-expand-lg navbar-light w-100">
                 <div class="container w-50 m-auto">
                   <div class="navbar-collapse justify-content-center" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                       <li class="nav-item m-2">
-                        <a class="nav-link btn btn-primary btn-block" href="index.php?controller=vuelos&action=mostrarVuelos">Lista de vuelos</a>
+                        <a class="nav-link btn btn-primary btn-block text-white" href="index.php?controller=vuelos&action=mostrarVuelos">Lista de vuelos</a>
                       </li>
                       <li class="nav-item m-2">
-                        <a class="nav-link btn btn-primary btn-block" href="index.php?controller=pasajes&action=mostrarInsertarPasajes'.'">Insertar pasaje</a>
+                        <a class="nav-link btn btn-primary btn-block text-white" href="index.php?controller=pasajes&action=mostrarInsertarPasajes'.'">Insertar pasaje</a>
                       </li>
                       <li class="nav-item m-2">
-                        <a class="nav-link btn btn-primary btn-block" href="index.php?controller=vuelos&action=mostrarFormularioVuelo'.'">Información de un vuelo</a>
+                        <a class="nav-link btn btn-primary btn-block text-white" href="index.php?controller=vuelos&action=mostrarFormularioVuelo'.'">Información de un vuelo</a>
                       </li>
                       <li class="nav-item m-2">
-                        <a class="nav-link btn btn-primary btn-block" href="index.php?controller=pasajes&action=mostrarGestionarPasajes'.'">Gestionar pasajes</a>
+                        <a class="nav-link btn btn-primary btn-block text-white" href="index.php?controller=pasajes&action=mostrarGestionarPasajes'.'">Gestionar pasajes</a>
                       </li>
                     </ul>
                   </div>

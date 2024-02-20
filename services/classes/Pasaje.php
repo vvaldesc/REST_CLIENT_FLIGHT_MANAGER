@@ -10,20 +10,14 @@ class Pasaje {
 
     public function __construct($assoc) {
         // Verifica si el array asociativo contiene las claves necesarias
-        if (isset($assoc['idpasaje']) &&
-            isset($assoc['pasajerocod']) &&
-            isset($assoc['identificador']) &&
-            isset($assoc['numasiento']) &&
-            isset($assoc['clase']) &&
-            isset($assoc['pvp'])) {
-            
+        if (isset($assoc['pasajerocod'])){
             // Asigna los valores del array asociativo a las propiedades de la clase
-            $this->idpasaje = $assoc['idpasaje'];
-            $this->pasajerocod = $assoc['pasajerocod'];
-            $this->identificador = $assoc['identificador'];
-            $this->numasiento = $assoc['numasiento'];
-            $this->clase = $assoc['clase'];
-            $this->pvp = $assoc['pvp'];
+            $this->idpasaje = $assoc['idpasaje'] ?? null;
+            $this->pasajerocod = $assoc['pasajerocod'] ?? null;
+            $this->identificador = $assoc['identificador'] ?? null;
+            $this->numasiento = $assoc['numasiento'] ?? null;
+            $this->clase = $assoc['clase'] ?? null;
+            $this->pvp = $assoc['pvp'] ?? null;
         } else {
             throw new Exception("Faltan datos en el array asociativo");
         }

@@ -17,6 +17,6 @@ class PasajerosController {
 
     public function getPasajeros() {
         //solo devuelve el codigo de pasajero y el nombre, ya que son los datos que necesito traer al cliente
-        return $this->service->request_curl();
+        return parseAssocToPasajero($this->service->request_curl());
     }
 }

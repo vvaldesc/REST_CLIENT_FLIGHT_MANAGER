@@ -15,9 +15,10 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/serv
  * @return \Vuelo
  */
 function parseAssocToVuelo($res) {
-    if(!$res || !$res === "SIN DATOS") throw new Exception(pantallaMensajeError("Lo sentimos... no existen vuelos para mostrar"));
+    if(!$res || $res === "SIN DATOS"){ throw new Exception("Lo sentimos... no existen vuelos para mostrar.");}
         $array = array();
         foreach ($res as $vuelo) {
+            if (!is_array($vuelo)) throw new Exception("Lo sentimos... hubo un error mostrando los datos.");
             array_push($array,new Vuelo($vuelo));
         }
         return $array;

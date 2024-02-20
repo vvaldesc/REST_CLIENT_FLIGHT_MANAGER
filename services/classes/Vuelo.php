@@ -12,20 +12,15 @@ class Vuelo {
 
     public function __construct($assoc) {
         // Verifica si el array asociativo contiene las claves necesarias
-        if (isset($assoc['identificador']) &&
-            isset($assoc['aeropuertoorigen']) &&
-            isset($assoc['aeropuertodestino']) &&
-            isset($assoc['tipovuelo']) &&
-            isset($assoc['fechavuelo']) &&
-            isset($assoc['descuento'])) {
+        if (isset($assoc['identificador'])) {
             
             // Asigna los valores del array asociativo a las propiedades de la clase
-            $this->identificador = $assoc['identificador'];
-            $this->aeropuertoorigen = $assoc['aeropuertoorigen'];
-            $this->aeropuertodestino = $assoc['aeropuertodestino'];
-            $this->tipovuelo = $assoc['tipovuelo'];
-            $this->fechavuelo = $assoc['fechavuelo'];
-            $this->descuento = $assoc['descuento'];
+            $this->identificador = $assoc['identificador'] ?? null;
+            $this->aeropuertoorigen = $assoc['aeropuertoorigen'] ?? null;
+            $this->aeropuertodestino = $assoc['aeropuertodestino'] ?? null;
+            $this->tipovuelo = $assoc['tipovuelo'] ?? null;
+            $this->fechavuelo = $assoc['fechavuelo'] ?? null;
+            $this->descuento = $assoc['descuento'] ?? null;
         } else {
             throw new Exception("Faltan datos en el array asociativo");
         }

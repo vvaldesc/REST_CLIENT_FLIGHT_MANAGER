@@ -19,11 +19,11 @@ class PasajesController {
     }
     
     public function getInfoVuelos() {
-        return parseAssocToVuelo((new vuelosController)->getVuelos());
+        return (new vuelosController)->getVuelos();
     }
     
     public function getAllPasajeros() {
-        return parseAssocToPasajero((new PasajerosController)->getPasajeros());
+        return (new PasajerosController)->getPasajeros();
     }
     
     public function getAllPasajes() {
@@ -36,14 +36,28 @@ class PasajesController {
         //es muy posible que la información de los vuelos cambie en el tiempo
         $vuelos = $this->getInfoVuelos();
         $pasajeros = $this->getAllPasajeros();
-        return $this->view->mostrarFormulario($vuelos,$pasajeros);
+        return $this->view->mostrarFormularioInsertar($vuelos,$pasajeros);
     }
+
     
     public function mostrarInsertarPasajes() {
         try {
             mostrar(menuSuperior().$this->formularioPasaje());
         } catch (Exception $exc) {
-            echo $exc->getTraceAsString();
+            mostrar(pantallaMensajeError($exc->getMessage()));
+        }
+    }
+    
+    public function insertarPasaje() {
+        try {
+            if ($this->service->request_post($_POST["pasajerocod"], $_POST["vuelo"], $_POST["numasiento"], $_POST["clase"], $_POST["pvp"])){
+                header("Location:index.php?controller=Pasajes&action=mostrarInsertarPasajes");
+                quit();
+            } else {
+                throw new Exception("Lo sentimos... Hubo un error creando tu pasaje, inténtalo de nuevo más tarde");
+            }
+        } catch (Exception $exc) {
+            mostrar(pantallaMensajeError($exc->getMessage()));
         }
     }
     
@@ -51,13 +65,14 @@ class PasajesController {
         try {
             if (!isset($_POST["cancelarCambiosPasaje"])) {
                 $this->service->request_put($_POST["idpasaje"], $_POST["pasajerocod"], $_POST["identificador"], $_POST["numasiento"], $_POST["clase"], $_POST["pvp"]);
+                header("Location:index.php?controller=Pasajes&action=mostrarGestionarPasajes");
+                quit();
             } else {
                 header("Location:index.php?controller=Pasajes&action=mostrarGestionarPasajes");
                 quit();
             }
-
         } catch (Exception $exc) {
-            echo $exc->getTraceAsString();
+            mostrar(pantallaMensajeError($exc->getMessage()));
         }
     }
     
@@ -77,7 +92,7 @@ class PasajesController {
             //if (isset($_POST["cancelarCambiosPasaje"])) $_POST = array();
             mostrar(menuSuperior().$this->tablaGestionable());
         } catch (Exception $exc) {
-            echo $exc->getMessage();
+            mostrar(pantallaMensajeError($exc->getMessage()));
         }
     }
 
