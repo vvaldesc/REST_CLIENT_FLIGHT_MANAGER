@@ -15,7 +15,7 @@ class PasajesController {
     }
     
     public function getPasajesVuelo($identificadorVuelo) {
-        return parseAssocToVuelo($this->service->request_pasaje_vuelo($identificadorVuelo));
+        return parseAssocToPasaje($this->service->request_pasaje_vuelo($identificadorVuelo));
     }
     
     public function getInfoVuelos() {

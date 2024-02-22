@@ -36,6 +36,10 @@ class vuelosController {
         return parseAssocToVuelo($this->service->request_curl());
     }
     
+    public function getUnVuelo($id) {
+        return parseAssocToVuelo(array($this->service->request_uno($id)));
+    }
+    
     public function mostrarFormularioVuelo() {
         mostrar(menuSuperior().$this->view->formularioVuelo($this->getVuelos()));
     }
@@ -43,9 +47,10 @@ class vuelosController {
     public function optionsVuelos($vuelos) {
         return $this->view->optionsVuelos($vuelos);
     }
+   
     
     public function infoVuelo($identificador) {
-        return $this->view->tablaVuelo($this->service->request_uno($identificador));
+        return $this->view->tablaVuelo($this->getUnVuelo($identificador));
     }
     
     /**
@@ -67,7 +72,7 @@ class vuelosController {
             }
             
         } catch (Exception $exc) {
-            mostrar($exc->getMessage());
+            mostrar(pantallaMensajeError($exc->getMessage()));
         }
     }
     

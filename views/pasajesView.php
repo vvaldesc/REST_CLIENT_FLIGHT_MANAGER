@@ -146,30 +146,61 @@ class PasajesView {
     public function listarPasajes($pasajes) {
         $htmlBody = '';
         foreach ($pasajes as $pasaje) {
-            $htmlBody .= entornoTr($this->imprimirFilaPasaje($pasaje->toArray()));
+            $htmlBody .= entornoTr($this->imprimirFilaPasajePasajero($pasaje));
         }
         return entornoThead($this->cabecera()).entornoTbody($htmlBody);
     }
     
     public function listarPasaje($pasaje) {
-        $htmlBody = entornoTr($this->imprimirFilaPasaje($pasaje));
+        $htmlBody = entornoTr($this->imprimirFilaPasajePasajero($pasaje));
         return entornoThead($this->cabecera()).entornoTbody($htmlBody);
     }
     
-    public function imprimirFilaPasaje($registro) {
-        $html = '';
-        foreach ($registro as $key => $value) {
-            $html .= entornoTd($value);
+    public function pasajeroPasaje($pasajeros, $pasajeroCodPasaje) {
+        foreach ($pasajeros as $pasajero) {
+            if($pasajero->getPasajeroCod() == $pasajeroCodPasaje) return $pasajero;
         }
+    }
+    
+    public function imprimirFilaPasajePasajero($pasaje) {
+        
+        $pasajeros = (new PasajerosController)->getPasajeros();
+        $pasajero = $this->pasajeroPasaje($pasajeros, $pasaje->getPasajeroCod());
+        
+        
+        $html = '';
+        $html .= entornoTd($pasaje->getIdPasaje());
+        $html .= entornoTd($pasajero->getPasajeroCod());
+        $html .= entornoTd($pasajero->getNombre());
+        $html .= entornoTd($pasajero->getPais());
+        $html .= entornoTd($pasaje->getNumAsiento());
+        $html .= entornoTd($pasaje->getClase());
+        $html .= entornoTd($pasaje->getPVP());
+        
+        return $html;
+    }
+    
+    public function imprimirFilaPasaje($pasaje) {
+        
+        $html = '';
+        $html .= entornoTd($pasaje->getIdPasaje());
+        $html .= entornoTd($pasajero->getPasajeroCod());
+        $html .= entornoTd($pasajero->getNombre());
+        $html .= entornoTd($pasajero->getPais());
+        $html .= entornoTd($pasaje->getNumAsiento());
+        $html .= entornoTd($pasaje->getClase());
+        $html .= entornoTd($pasaje->getPVP());
+        
         return $html;
     }
     
     public function cabecera() {
         return '<tr>'
-        . '<th>Idpasaje</th>'
-        . '<th>Pasajerocod</th>'
-        . '<th>Identificador</th>'
-        . '<th>Numasiento</th>'
+        . '<th>Id de pasaje</th>'
+        . '<th>Codigo de pasajero</th>'
+        . '<th>Nombre de pasajero</th>'
+        . '<th>Pais del pasajero</th>'
+        . '<th>Numero de asiento</th>'
         . '<th>Clase</th>'
         . '<th>PVP</th>'
         . '</tr>';

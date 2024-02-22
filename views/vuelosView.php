@@ -14,31 +14,69 @@ class VuelosView {
                 . '<input type="hidden" name="vuelo" value=' . base64_encode(serialize($vuelo)) . '>' //Instancia vuelo a reservar
                 . '</form>';
     }
-
-    public function imprimirFilaVuelo($registro) {
-        $html = '';
-        $registro;
-        foreach ($registro as $key => $value) {
-            $html .= entornoTd($value);
+    
+    public function contadorPasajerosVuelo($id) {
+        $contador = 0;
+        $pasajes = (new PasajesController)->getAllPasajes();
+        foreach ($pasajes as $pasaje) {
+            if ($pasaje->getIdentificador() == $id) $contador++;
         }
-        //$html .= entornoTd($this->formularioDetalleVuelo($registro));
+        return $contador;
+    }
+    
+    public function getAllAeropuertos() {
+        return(new AeropuertosController)->getAllAeropuertos();
+    }
+    
+    public function getAeropuertoOrigen($id, $aeropuertos) {
+        foreach ($aeropuertos as $aeropuerto) {
+            if($aeropuerto->getCodAeropuerto() == $id) return $aeropuerto;
+        }
+    }
+    
+    public function getAeropuertoDestino($id, $aeropuertos) {
+        foreach ($aeropuertos as $aeropuerto) {
+            if($aeropuerto->getCodAeropuerto() == $id) return $aeropuerto;
+        }
+    }
+    public function imprimirFilaVuelo($registro) {
+        //Necesitaré toda la información de aeropuertos
+        //Por temas de optimización los cargaré aqui aunque no
+        //creo que sea el mejor sitio en cuanto al orden
+        $allAeropuertos = $this->getAllAeropuertos();
+        $aeropuertoOrigen = $this->getAeropuertoOrigen($registro->getAeropuertoOrigen(),$allAeropuertos);
+        $aeropuertoDestino = $this->getAeropuertoDestino($registro->getAeropuertoDestino(),$allAeropuertos);
+        
+        $html = '';
+        $html .= entornoTd($registro->getIdentificador());
+        $html .= entornoTd($registro->getAeropuertoOrigen());
+        $html .= entornoTd($aeropuertoOrigen->getNombre());
+        $html .= entornoTd($aeropuertoOrigen->getPais());
+        $html .= entornoTd($registro->getAeropuertoDestino());
+        $html .= entornoTd($aeropuertoDestino->getNombre());
+        $html .= entornoTd($aeropuertoDestino->getPais());
+        $html .= entornoTd($registro->getTipoVuelo());
+        $html .= entornoTd($this->contadorPasajerosVuelo($registro->getIdentificador()));
         return $html;
     }
     
     public function cabecera() {
         return '<tr>'
         . '<th>Identificador</th>'
-        . '<th>Origen</th>'
-        . '<th>Destino</th>'
-        . '<th>Clase</th>'
-        . '<th>Fecha</th>'
-        . '<th>Descuento</th>'
+        . '<th>Aeropuerto de origen</th>'
+        . '<th>Nombre aeropuerto de origen</th>'
+        . '<th>País de origen</th>'
+        . '<th>Aeropuerto de destino</th>'
+        . '<th>Nombre de aeropuerto destino</th>'
+        . '<th>Pais de destino</th>'
+        . '<th>Tipo de vuelo</th>'
+        . '<th>Numero de pasajeros</th>'
         . '</tr>';
     }
 
     
-    public function contenidoTablaVuelo($vuelo) {
-        $htmlBody = entornoTr($this->imprimirFilaVuelo($vuelo));
+    public function contenidoTablaVuelo($vuelos) {
+        $htmlBody = entornoTr($this->imprimirFilaVuelo($vuelos[0]));
         return entornoThead($this->cabecera()).entornoTbody($htmlBody);
     }
     
@@ -46,7 +84,7 @@ class VuelosView {
     public function contenidoTablaVuelos($vuelos) {
         $htmlBody = '';
         foreach ($vuelos as $vuelo) {
-            $htmlBody .= entornoTr($this->imprimirFilaVuelo($vuelo->toArray()));
+            $htmlBody .= entornoTr($this->imprimirFilaVuelo($vuelo));
         }
         return entornoThead($this->cabecera()).entornoTbody($htmlBody);
     }

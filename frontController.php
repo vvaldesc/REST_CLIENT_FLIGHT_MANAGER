@@ -10,6 +10,8 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/contro
 include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/pasajerosController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/vuelosController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/pasajesController.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/aeropuertosController.php';
+
 
 // Define la acción por defecto 
 define('ACCION_DEFECTO', 'mostrarVuelos');
