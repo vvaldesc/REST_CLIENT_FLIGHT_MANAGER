@@ -82,7 +82,7 @@ class PasajesView {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        ...
+                        ¿Estás seguro de que quieres modificar este pasaje?
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -182,6 +182,9 @@ class PasajesView {
     
     public function imprimirFilaPasaje($pasaje) {
         
+        $pasajeros = (new PasajerosController)->getPasajeros();
+        $pasajero = $this->pasajeroPasaje($pasajeros, $pasaje->getPasajeroCod());
+        
         $html = '';
         $html .= entornoTd($pasaje->getIdPasaje());
         $html .= entornoTd($pasajero->getPasajeroCod());
@@ -236,10 +239,10 @@ class PasajesView {
             //Esto ahorrará una consulta innecesaria al servidor
             if (isset($_POST["editarPasaje"])) {
                 $htmlTr = $_POST["editarPasaje"] == $pasaje->getIdPasaje()
-                        ? $this->imprimirEditarFilaPasaje($pasaje->toArray())
-                        : $this->imprimirFilaPasaje($pasaje->toArray()).entornoTd("").entornoTd("");
+                        ? $this->imprimirEditarFilaPasaje($pasaje)
+                        : $this->imprimirFilaPasaje($pasaje).entornoTd("").entornoTd("");
             } else {
-                $htmlTr = $this->imprimirGestionarFilaPasaje($pasaje->toArray(),$pasajes);
+                $htmlTr = $this->imprimirGestionarFilaPasaje($pasaje,$pasajes);
             }
             $htmlBody .= entornoTr($htmlTr);
         }
@@ -253,7 +256,7 @@ class PasajesView {
     
     public function imprimirEditarFilaPasaje($registro) {
         $html='';
-        foreach ($registro as $key => $value) {
+        foreach ($registro->toArray() as $key => $value) {
             $html .= $key!="idpasaje"
                     ? entornoTd($this->entornoInput('text',$key,$value))
                     : entornoTd($value);
@@ -265,10 +268,10 @@ class PasajesView {
     
     public function imprimirGestionarFilaPasaje($registro, $pasajes) {
         $html = '';
-        foreach ($registro as $key => $value) {
+        foreach ($registro->toArray() as $value) {
             $html .= entornoTd($value);
         }
-        $id = $registro["idpasaje"];//Guardo el identificador
+        $id = $registro->getIdPasaje();//Guardo el identificador
         $html .= entornoTd($this->formularioGestionarPasaje($this->botonEditar($id),$pasajes, $id, "mostrarGestionarPasajes"));
         $html .= entornoTd($this->botonBorrar($id));
         return $html;
