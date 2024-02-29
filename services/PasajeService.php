@@ -108,7 +108,7 @@ class PasajeService {
         curl_close($conexion);
     }
 
-//DELETE para borrar 
+    //DELETE para borrar 
     function request_delete($id) {
         $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeServices.php/?id=" . $id;
         $conexion = curl_init();
@@ -123,8 +123,7 @@ class PasajeService {
         curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
         $res = curl_exec($conexion);
         if ($res) {
-            echo "<br>Salida request_delete<br>";
-            print_r($res);
+            return json_decode($res, true)["resultado"];
         }
         curl_close($conexion);
     }

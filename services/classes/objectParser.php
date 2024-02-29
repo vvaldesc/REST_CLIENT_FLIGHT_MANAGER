@@ -35,7 +35,7 @@ function parseAssocToVuelo($res) {
  * @return \Pasaje
  */
 function parseAssocToPasaje($res) {
-    if(!$res || $res === "SIN DATOS") throw new Exception(pantallaMensajeError("Lo sentimos... no existen pasajes para mostrar"));
+    if(!$res || $res === "SIN DATOS") throw new Exception("Lo sentimos... no existen pasajes para mostrar");
         $array = array();
         foreach ($res as $pasaje) {
             array_push($array,new Pasaje($pasaje));
@@ -52,7 +52,7 @@ function parseAssocToPasaje($res) {
  * @return \Pasajero
  */
 function parseAssocToPasajero($res) {
-    if(!$res || $res === "SIN DATOS") throw new Exception(pantallaMensajeError("Lo sentimos... no existen pasajeros para mostrar"));
+    if(!$res || $res === "SIN DATOS") throw new Exception("Lo sentimos... no existen pasajeros para mostrar");
         $array = array();
         foreach ($res as $pasajero) {
             array_push($array,new Pasajero($pasajero));

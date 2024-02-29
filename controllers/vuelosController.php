@@ -47,6 +47,10 @@ class vuelosController {
     public function optionsVuelos($vuelos) {
         return $this->view->optionsVuelos($vuelos);
     }
+    
+    public function optionsVuelosSelected($vuelos,$selected) {
+        return $this->view->optionsVuelosSelected($vuelos,$selected);
+    }
    
     
     public function infoVuelo($identificador) {
@@ -59,13 +63,13 @@ class vuelosController {
     public function manejarAccion() {
         try {
             if (!isset($_POST["identificadorVuelo"]) || $_POST["identificadorVuelo"]=="")
-                throw new Exception(pantallaMensajeError("No seleccionaste identificador de vuelo"));
+                throw new Exception("No seleccionaste identificador de vuelo");
             if (isset($_POST["1"])) {
                 mostrar(menuSuperior().$this->infoVuelo($_POST["identificadorVuelo"]));
             } else if (isset($_POST["2"])) {
                 $pasajes = (new PasajesController)->getPasajesVuelo($_POST["identificadorVuelo"]);
                 if (!is_array($pasajes) || $pasajes==="SIN DATOS")
-                    throw new Exception(pantallaMensajeError("No existen pasajes en el vuelo seleccionado"));
+                    throw new Exception("No existen pasajes en el vuelo seleccionado");
                 mostrar(menuSuperior().(new PasajesController)->tablaPasajes($pasajes));
             } else {
                 throw new Exception(mensajeError("No existe la funcionalidad seleccinada"));

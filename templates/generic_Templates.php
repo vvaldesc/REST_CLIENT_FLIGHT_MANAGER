@@ -23,6 +23,11 @@ function entornoOption($param, $value = null) {
     return '<option value='.$value.'>' . $param . '</option>';
 }
 
+function entornoOptionSelect($param, $value = null) {
+    if (!$value) $value = $param;
+    return '<option selected value='.$value.'>' . $param . '</option>';
+}
+
 function entornoTbody($param) {
     return '<tbody>' . $param . '</tbody>';
 }
@@ -41,6 +46,10 @@ function entornoTabla($param, $class = null) {
 
 function mostrar($param) {
     echo $param;
+}
+
+function pantallaMensajeExito($message,$inner = '') {
+    return menuSuperior().'<div class="alert alert-success text-center" role="alert"><p>' . $message . '</p></div>'.$inner;
 }
 
 function menuSuperior() {

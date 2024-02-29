@@ -105,6 +105,16 @@ class VuelosView {
         return $html;
     }
     
+    public function optionsVuelosSelected($vuelos,$selected) {
+        $html = '';
+            foreach ($vuelos as $vuelo) {
+                $selected == $vuelo->getIdentificador()
+                ? $html .= entornoOptionSelect($vuelo->getIdentificador().' - '.$vuelo->getAeropuertoOrigen().' - '.$vuelo->getAeropuertoDestino(),$vuelo->getIdentificador())
+                : $html .= entornoOption($vuelo->getIdentificador().' - '.$vuelo->getAeropuertoOrigen().' - '.$vuelo->getAeropuertoDestino(),$vuelo->getIdentificador());
+            }
+        return $html;
+    }
+    
     public function formularioVuelo($vuelos) {
         $optionsVuelos = $this->optionsVuelos($vuelos);
         

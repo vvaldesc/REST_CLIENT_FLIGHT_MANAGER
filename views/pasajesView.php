@@ -39,6 +39,10 @@ class PasajesView {
         return '<form action ="index.php?controller=Pasajes&action=mostrarGestionarPasajes" method="POST">' . $this->botonCancelar() . '</form>';
     }
     
+    public function formularioBorrar() {
+        return '<form action ="index.php?controller=Pasajes&action=mostrarGestionarPasajes" method="POST">' . $this->botonCancelar() . '</form>';
+    }
+    
     public function formularioGestionarPasaje($innerForm,$pasajes, $identificador, $action) {
         return '<form action ="index.php?controller=Pasajes&action='.$action.'" method="POST">' . $innerForm . ''
                 . '<input type="hidden" name="pasajes" value=' . base64_encode(serialize($pasajes)) . '>' //Todos los pasajes
@@ -93,26 +97,32 @@ class PasajesView {
                 </div>';
     }
 
-    public function modalBorrarPasaje() {
-        return '<div class="modal fade" id="modalBorrarPasaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    public function modalBorrarPasaje($id) {
+        return '<!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalBorrarPasaje'.$id.'">
+                    Borrar
+                </button>
+                <div class="modal fade" id="modalBorrarPasaje'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Se necesita de confirmación</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Está seguro de que quiere borrar este pasaje?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <form action="index.php?controller=Pasajes&action=eliminarRegistro" method="POST">
+                                    <button name="borrarPasaje" type="submit" value="'.$id.'" class="btn btn-danger">Si, borrar</button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                          ...
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                      </div>
                     </div>
-                  </div>';        
+                </div>';        
     }
     
     public function entornoFormTablaEditable($innerForm) {
@@ -127,6 +137,16 @@ class PasajesView {
         $html = '';
             foreach ($pasajeros as $pasajero) {
                 $html .= entornoOption($pasajero->getPasajeroCod().' - '.$pasajero->getNombre(),$pasajero->getPasajeroCod());
+            }
+        return $html;
+    }
+    
+    public function optionsPasajerosSelected($pasajeros,$selected) {
+        $html = '';
+            foreach ($pasajeros as $pasajero) {
+                $selected == $pasajero->getPasajeroCod()
+                ? $html .= entornoOption($pasajero->getPasajeroCod().' - '.$pasajero->getNombre(),$pasajero->getPasajeroCod())
+                : $html .= entornoOptionSelect($pasajero->getPasajeroCod().' - '.$pasajero->getNombre(),$pasajero->getPasajeroCod());
             }
         return $html;
     }
@@ -218,10 +238,7 @@ class PasajesView {
         return !isset($_POST["editarPasaje"])
                 ? entornoTabla($this->contenidoTablaGestionarPasajes($pasajes), "table")
                 //Si la tabla es editable, la tabla estará dentro de un formulario y concatenada al modal confirmar cambios
-                : $this->entornoFormTablaEditable(
-                        entornoTabla($this->contenidoTablaGestionarPasajes($pasajes), "table"). 
-                        $this->modalConfirmarCambios()
-                        );
+                : $this->mostrarFormularioEditar();
     }
     
     public function contenidoTablaGestionarPasajes($pasajes) {
@@ -256,11 +273,13 @@ class PasajesView {
     
     public function imprimirEditarFilaPasaje($registro) {
         $html='';
+        
         foreach ($registro->toArray() as $key => $value) {
             $html .= $key!="idpasaje"
                     ? entornoTd($this->entornoInput('text',$key,$value))
                     : entornoTd($value);
         }
+        
         $html .= entornoTd($this->imprimirBotonModalConfirmar());
         $html .= entornoTd($this->formularioCancelarCambios());
         return $html;
@@ -272,8 +291,9 @@ class PasajesView {
             $html .= entornoTd($value);
         }
         $id = $registro->getIdPasaje();//Guardo el identificador
-        $html .= entornoTd($this->formularioGestionarPasaje($this->botonEditar($id),$pasajes, $id, "mostrarGestionarPasajes"));
-        $html .= entornoTd($this->botonBorrar($id));
+        //Opciones para empezar a editar
+        $html .= entornoTd($this->formularioGestionarPasaje($this->botonEditar($id),$pasajes, $id, "mostrarPantallaEdicion"));
+        $html .= entornoTd($this->modalBorrarPasaje($id));
         return $html;
     }
     
@@ -303,7 +323,7 @@ class PasajesView {
         . '</tr>';
     }
     
-    //-------------------------------------//
+    //-----------------PANTALLAS-----------------//
 
     public function mostrarFormularioInsertar($vuelos,$pasajeros) {
         $optionsVuelos = (new vuelosController())->optionsVuelos($vuelos);
@@ -343,8 +363,58 @@ class PasajesView {
                     </div>
                     <button type="submit" class="btn btn-primary">Insertar Pasaje</button>
                   </form>
-                </div>
-';
-        
+                </div>';
     }
+    
+    public function mostrarFormularioEditar($vuelos,$pasajeros,$pasaje) {
+        $optionsVuelos = (new vuelosController())->optionsVuelosSelected($vuelos, $pasaje->getIdentificador());
+        $optionsPasajeros = $this->optionsPasajerosSelected($pasajeros, $pasaje->getPasajeroCod()); 
+        
+        $checkedTurista = $pasaje->getClase() == 'TURISTA' ? 'checked' : '';
+        $checkedPrimera = $pasaje->getClase() == 'PRIMERA' ? 'checked' : '';
+        $checkedBusiness = $pasaje->getClase() == 'BUSINESS' ? 'checked' : '';
+        
+        $asiento = strval($pasaje->getNumAsiento());
+        
+        $pvp = strval($pasaje->getPVP());
+
+        return '<div class="container mt-5">
+                  <h2>Formulario para editar pasaje con identificador '.$pasaje->getIdPasaje().'</h2>
+                  <form action="index.php?controller=pasajes&action=editarPasaje" method="POST">
+                    <div class="mb-3">
+                      <label for="selectVuelo" class="form-label">Seleccionar Identificador de Vuelo</label>
+                      <select name="identificador" class="form-select" id="selectVuelo" required>
+                        '.$optionsVuelos.'
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <labelfor="selectPasajero" class="form-label">Seleccionar Pasajero</label>
+                      <select name="pasajerocod" class="form-select" id="selectPasajero" required>
+                        '.$optionsPasajeros.'
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="inputAsiento" class="form-label">Número de Asiento</label>
+                      <input value="'.$asiento.'" name="numasiento" type="text" class="form-control" id="inputAsiento" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="radioTurista" class="form-label">Turista</label>
+                        <input '.$checkedTurista.' type="radio" id="radioTurista" name="clase" value="Turista" required>
+
+                      <label for="radioPrimera" class="form-label">Primera</label>
+                        <input '.$checkedPrimera.' type="radio" id="radioPrimera" name="clase" value="Primera" required>
+
+                      <label for="radioBusiness" class="form-label">Business</label>
+                        <input '.$checkedBusiness.' type="radio" id="radioBusiness" name="clase" value="Business" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="inputPrecio" class="form-label">Precio</label>
+                      <input value="'.$pvp.'" name="pvp" type="number" class="form-control" id="inputPrecio" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Editar Pasaje</button>
+                    <input type="hidden" name="idpasaje" value=' . $pasaje->getIdentificador() . '>
+                    '.$this->botonCancelar().'
+                  </form>
+                </div>';
+    }    
 }
