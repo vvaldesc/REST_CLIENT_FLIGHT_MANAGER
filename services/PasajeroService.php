@@ -1,13 +1,21 @@
 <?php
 
-class PasajeService {
+// Probamos si funciona con 
+// La librería CURL permite realizar peticiones a servidores remotos. 
+// Un departamento curl -v http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Cliente/?id=10 
+// Todos los dep: curl -v http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Cliente/
+//GET 
+
+
+
+class PasajeroService {
 
     public function __construct() {
         
     }
 
     function request_curl() {
-        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeServices.php/";
+        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeroServices.php/";
         $conexion = curl_init();
         //Url de la petición 
         curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);
@@ -19,14 +27,14 @@ class PasajeService {
         curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
         $res = curl_exec($conexion);
         if ($res) {
-            return json_decode($res, true);
+            return json_decode($res,true);
         }
         curl_close($conexion);
     }
 
-    //GET con un dep 
+//GET con un dep 
     function request_uno($id) {
-        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeServices.php/?idpasaje=" . $id;
+        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeroServices.php/?id=" . $id;
         $conexion = curl_init();
         //Url de la petición 
         curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);
@@ -44,28 +52,10 @@ class PasajeService {
         curl_close($conexion);
     }
 
-    function request_pasaje_vuelo($id) {
-        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeServices.php/?identificador=" . $id;
-        $conexion = curl_init();
-        //Url de la petición 
-        curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);
-        //Tipo de petición 
-        curl_setopt($conexion, CURLOPT_HTTPGET, TRUE);
-        //Tipo de contenido 
-        curl_setopt($conexion, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-        //para recibir una respuesta 
-        curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
-        $res = curl_exec($conexion);
-        if ($res) {
-            return json_decode($res, true);
-        }
-        curl_close($conexion);
-    }
-
     //POST Van datos, se pone el Content-Length del envío 
-    function request_post($pasajerocod, $vuelo, $numasiento, $clase, $pvp) {
-        $envio = json_encode(array("pasajerocod" => $pasajerocod, "identificador" => $vuelo, "numasiento" => $numasiento, "clase" => $clase, "pvp" => $pvp));
-        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeServices.php/";
+    function request_post($dep, $nom, $loc) {
+        $envio = json_encode(array("dept_no" => $dep, "dnombre" => $nom, "loc" => $loc));
+        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeroServices.php/";
         $conexion = curl_init();
         curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);
         //Cabecera, tipo de datos y longitud de envío
@@ -79,15 +69,16 @@ class PasajeService {
         curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
         $res = curl_exec($conexion);
         if ($res) {
-            return $res;
+            echo "<br>Salida request_post<br>";
+            print_r($res);
         }
         curl_close($conexion);
     }
 
-    //PUT para modificar 
-    function request_put($idpasaje, $pasajerocod, $identificador, $numasiento, $clase, $pvp) {
-        $envio = json_encode(array("idpasaje" => $idpasaje, "pasajerocod" => $pasajerocod, "identificador" => $identificador, "numasiento" => $numasiento, "clase" => $clase, "pvp" => $pvp));
-        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeServices.php/";
+//PUT para modificar 
+    function request_put($dep, $nom, $loc) {
+        $envio = json_encode(array("dept_no" => $dep, "dnombre" => $nom, "loc" => $loc));
+        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeroServices.php/";
         $conexion = curl_init();
         curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);
         //Cabecera, tipo de datos y longitud de envío 
@@ -103,14 +94,13 @@ class PasajeService {
         if ($res) {
             echo "<br>Salida request_put<br>";
             print_r($res);
-            return $res;
         }
         curl_close($conexion);
     }
 
-    //DELETE para borrar 
+//DELETE para borrar 
     function request_delete($id) {
-        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeServices.php/?id=" . $id;
+        $urlmiservicio = "http://localhost/_servWeb/UT7_3_Actividad3_RESTFul_Servidor/PasajeroServices.php/?id=" . $id;
         $conexion = curl_init();
         curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);
         //Cabecera, tipo de datos y longitud de envío 
@@ -123,7 +113,8 @@ class PasajeService {
         curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
         $res = curl_exec($conexion);
         if ($res) {
-            return json_decode($res, true)["resultado"];
+            echo "<br>Salida request_delete<br>";
+            print_r($res);
         }
         curl_close($conexion);
     }

@@ -1,41 +1,34 @@
 
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/templates/generic_templates.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/templates/exception_templates.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/libraries/util_functions.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/UT7_3_Actividad3_RESTFul_Cliente/services/classes/objectParser.php';
 
-//include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/usuariosController.php';
-//include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/reservasController.php';
+
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/pasajesController.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/pasajerosController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/vuelosController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/pasajesController.php';
-/*
+include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/controllers/aeropuertosController.php';
 
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/views/usuariosView.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/views/reservasView.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/views/hotelesView.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/views/habitacionesView.php';*/
-
-/*
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/models/UsuariosModel.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/models/ReservasModel.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/models/HotelesModel.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/UT7_3_Actividad3_RESTFul_Cliente/models/HabitacionesModel.php';
-*/
 
 // Define la acción por defecto 
-define('ACCION_DEFECTO', 'interfazPasajes');
+define('ACCION_DEFECTO', 'mostrarVuelos');
 // Define el controlador por defecto 
-define('CONTROLADOR_DEFECTO', 'pasajes');
+define('CONTROLADOR_DEFECTO', 'vuelos');
 
 // Comprueba la acción a realizar, que llegará en la petición. 
 // Si no hay acción a realizar lanzará la acción por defecto, que es listar
 // Y se carga la acción, llama a la función cargarAccion 
 function lanzarAccion($controllerObj) {
-
     if (isset($_GET["action"]) && method_exists($controllerObj,
                     $_GET["action"])) {
         cargarAccion($controllerObj, $_GET["action"]);
     } else {
         cargarAccion($controllerObj, ACCION_DEFECTO);
         //O añadir una página indicando el error de la acción 
-        //die("Se ha cargado una acción errónea"); 
+        //die("Se ha cargado una acción errónea");
     }
 }
 

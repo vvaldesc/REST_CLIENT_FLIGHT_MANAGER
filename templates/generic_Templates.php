@@ -1,5 +1,7 @@
 <?php
 
+
+
 function entornoTd($param) {
     return '<td>' . $param . '</td>';
 }
@@ -14,6 +16,16 @@ function entornoTr($param) {
 
 function entornoH3($param) {
     return '<h3>' . $param . '</h3>';
+}
+
+function entornoOption($param, $value = null) {
+    if (!$value) $value = $param;
+    return '<option value='.$value.'>' . $param . '</option>';
+}
+
+function entornoOptionSelect($param, $value = null) {
+    if (!$value) $value = $param;
+    return '<option selected value='.$value.'>' . $param . '</option>';
 }
 
 function entornoTbody($param) {
@@ -32,31 +44,33 @@ function entornoTabla($param, $class = null) {
     return '<table class=' . $class . '>' . $param . '</table>';
 }
 
-function mensajeError($message) {
-    return '<div class="alert alert-danger text-center" role="alert"><p>' . $message . '</p></div>';
-}
-
 function mostrar($param) {
     echo $param;
 }
 
-function menuSuperior() {
-    return '<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+function pantallaMensajeExito($message,$inner = '') {
+    return menuSuperior().'<div class="alert alert-success text-center" role="alert"><p>' . $message . '</p></div>'.$inner;
+}
 
-    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-      <ul class="navbar-nav">
-        <li class="nav-item m-2">
-          <a class="nav-link btn btn-primary btn-block" href="'.$_SERVER["DOCUMENT_ROOT"].'">Lista de vuelos</a>
-        </li>
-        <li class="nav-item m-2">
-          <a class="nav-link btn btn-primary btn-block" href="'.$_SERVER["DOCUMENT_ROOT"].'?controller=pasajes&action=interfazPasajes'.'">Insertar pasaje</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>';
+function menuSuperior() {
+    return '<nav class="navbar navbar-expand-lg navbar-light w-100">
+                <div class="container w-50 m-auto">
+                  <div class="navbar-collapse justify-content-center" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                      <li class="nav-item m-2">
+                        <a class="nav-link btn btn-primary btn-block text-white" href="index.php?controller=vuelos&action=mostrarVuelos">Lista de vuelos</a>
+                      </li>
+                      <li class="nav-item m-2">
+                        <a class="nav-link btn btn-primary btn-block text-white" href="index.php?controller=pasajes&action=mostrarInsertarPasajes'.'">Insertar pasaje</a>
+                      </li>
+                      <li class="nav-item m-2">
+                        <a class="nav-link btn btn-primary btn-block text-white" href="index.php?controller=vuelos&action=mostrarFormularioVuelo'.'">Información de un vuelo</a>
+                      </li>
+                      <li class="nav-item m-2">
+                        <a class="nav-link btn btn-primary btn-block text-white" href="index.php?controller=pasajes&action=mostrarGestionarPasajes'.'">Gestionar pasajes</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+            </nav>';
 }

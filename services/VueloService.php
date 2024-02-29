@@ -46,8 +46,7 @@ class VueloService {
         curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
         $res = curl_exec($conexion);
         if ($res) {
-            echo "<br>Salida request_curl<br>";
-            print_r($res);
+            return json_decode($res,true);
         }
         curl_close($conexion);
     }
